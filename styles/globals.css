@@ -26,7 +26,7 @@
 --space-jump: clamp(1.25rem, 0.35rem + 3.8vw, 3.75rem); /*20-60px */
 }
 
-/* 基本情報 */
+/* 基本設定 */
 body {
 color: var(--black);
 font-family: -app-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
@@ -43,6 +43,11 @@ font-size: var(--heading2);
 
 h3 {
 font-size: var(--heading3);
+}
+
+/* next/image */
+span > img {
+  transition: 0.2s;
 }
 
 /* リセット */
