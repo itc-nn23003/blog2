@@ -13,12 +13,10 @@ import {
 } from 'components/two-column'
 import Image from 'next/image'
 import { getPlaiceholder } from 'plaiceholder'
-import { getImageBuffer } from 'lib/getImageBuffer'
-
 // ローカルの代替アイキャッチ画像
 import { eyecatchLocal } from 'lib/constants'
 
-const Schedule = ({
+const Post = ({
   title,
   publish,
   content,
@@ -37,7 +35,6 @@ const Schedule = ({
       />
       <article>
         <PostHeader title={title} subtitle='Blog Article' publish={publish} />
-
         <figure>
           <Image
             src={eyecatch.url}
@@ -51,7 +48,6 @@ const Schedule = ({
             blurDataURL={eyecatch.blurDataURL}
           />
         </figure>
-
         <TwoColumn>
           <TwoColumnMain>
             <PostBody>
@@ -67,15 +63,26 @@ const Schedule = ({
   )
 }
 
-const getStaticProps = async () => {
-  const slug = 'micro'
+const getStaticPaths = async () => {
+  return {
+    paths: ['/blog/schedule', '/blog/music', '/blog/micro'],
+    fallback: false
+  }
+}
+
+const getStaticProps = async ({ params }) => {
+  const { slug } = params
   const post = await getPostBySlug(slug)
+  if (!post) {
+    return {
+      notFound: true
+    }
+  }
   const description = extractText(post.content)
   const eyecatch = post.eyecatch ?? eyecatchLocal
-  const imageBuffer = await getImageBuffer(eyecatch.url)
-  const { base64 } = await getPlaiceholder(imageBuffer)
+  const { base64 } = await getPlaiceholder(eyecatch.url)
+  console.log('Base64 Blur Data:', base64)
   eyecatch.blurDataURL = base64
-
   return {
     props: {
       title: post.title,
@@ -87,5 +94,5 @@ const getStaticProps = async () => {
     }
   }
 }
-export default Schedule
-export { getStaticProps }
+export default Post
+export { getStaticProps, getStaticPaths }
