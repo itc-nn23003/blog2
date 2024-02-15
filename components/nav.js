@@ -16,18 +16,25 @@ const Nav = () => {
   return (
     <nav className={navIsOpen ? styles.open : styles.close}>
       <button className={styles.btn} onClick={toggleNav}>
-        MENU
+        <span className={styles.bar}></span>
+        <span className='sr-only'>MENU</span>
       </button>
 
       <ul className={styles.list}>
         <li>
-          <Link href='/' onClick={closeNav}>Home</Link>
+          <Link href='/' onClick={closeNav}>
+            Home
+          </Link>
         </li>
         <li>
-          <Link href='/about' onClick={closeNav}>About</Link>
+          <Link href='/about' onClick={closeNav}>
+            About
+          </Link>
         </li>
         <li>
-          <Link href='/blog' onClick={closeNav}>Blog</Link>
+          <Link href='/blog' onClick={closeNav}>
+            Blog
+          </Link>
         </li>
       </ul>
     </nav>
